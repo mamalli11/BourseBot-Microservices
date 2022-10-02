@@ -1,0 +1,19 @@
+{
+  "name": "bot-services",
+  "version": "1.0.0",
+  "description": "<p align=\"center\">\r   <a href=\"\" rel=\"noopener\">\r  <img width=200px height=200px src=\"https://storage2.avvalmarket.ir/apps/com.groupdesign.bot/icon/512x512.png\" alt=\"Project logo\"></a>\r </p>",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index",
+    "start": "node index"
+  },
+  "keywords": [],
+  "author": "Seyed Mohammad Javad Majidinia",
+  "license": "MIT",
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "auto-bind": "^4.0.0",
+    "dotenv": "^16.0.3",
+    "telegraf": "^4.10.0"
+  }
+}
