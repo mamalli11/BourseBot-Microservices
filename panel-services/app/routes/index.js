@@ -1,15 +1,13 @@
-const { Router } = require("express");
+const router = require("express").Router();
 
-const router = new Router();
-
-const indexController = require("../controllers/indexController");
+const { IndexController } = require("../controllers/indexController");
 
 //^  @desc   Index Page
 //*  @route  GET /
-router.get("/:id", indexController.index);
+router.get("/:id", IndexController.index);
 
 //^  @desc   Buy Panel
 //*  @route  GET /buy
-router.get("/buy/:id/:panel", indexController.buyPanel);
+router.get("/buy/:id/:panel", IndexController.buyPanel);
 
-module.exports = router;
+module.exports = { indexRouter: router };

@@ -1,9 +1,7 @@
-const { Router } = require("express");
+const router = require("express").Router();
 
 const Payment = require("../controllers/PaymentController");
 
-const router = new Router();
-
 router.get("/payment/callbackurl", Payment.CallBackUrl);
 
-module.exports = router;
+module.exports = { paymentRouter: router };
