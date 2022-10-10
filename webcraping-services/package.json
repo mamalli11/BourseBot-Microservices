@@ -8,5 +8,10 @@
     "start": "node index"
   },
   "author": "Seyed Mohammad Javad Majidinia",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "cheerio": "^1.0.0-rc.12",
+    "puppeteer": "^18.2.1"
+  }
 }
