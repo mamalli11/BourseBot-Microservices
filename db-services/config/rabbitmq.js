@@ -1,7 +1,7 @@
 const amqp = require("amqplib");
 
 const Companies = require("../models/Companies");
-const Groups = require("../models/Groups");
+const Category = require("../models/Category");
 
 
 let channel;
@@ -9,6 +9,7 @@ let channel;
 const connectTochannel = async () => {
     try {
         const connection = await amqp.connect("amqp://localhost:5672");
+        console.log("Connected to rabbitmq server ✔");
         return await connection.createChannel();
     } catch (error) {
         console.log("cannot connect to rabbitmq server");
@@ -50,6 +51,9 @@ const processingRequestsQueue = async (queueName) => {
                 case 'Groups':
                     Data = await handelReqGroups(Type, Body)
                     break;
+                case 'Scraping':
+                    Data = await handelReqScraping(Type, Body)
+                    break;
                 default:
                     Data = "NOT Defined"
                     break;
@@ -61,6 +65,31 @@ const processingRequestsQueue = async (queueName) => {
         }
     });
 };
+
+const handelReqScraping = async (Type, data) => {
+    try {
+        switch (Type) {
+            case 'Craete': {
+                let catID = await Category.findOne({ categoryName: data.category[0] })
+                if (!catID) {
+                    catID = await Category.create({
+                        categoryName: data.category[0],
+                        subCategoryName: data.category[1],
+                    })
+                }
+                await Companies.create({ ...data, categoryID: catID, });
+                return 'companie Created!';
+            } case 'Update': {
+                const companie = await Companies.findById(data);
+                return companie;
+            }
+            default:
+                return 'داده ای یافت نشد';
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 const handelReqCompanies = async (Type, data) => {
     switch (Type) {
@@ -85,19 +114,20 @@ const handelReqCompanies = async (Type, data) => {
 const handelReqGroups = async (Type, data) => {
     switch (Type) {
         case 'All': {
-            const groups = await Groups.find();
+            const groups = await Category.find();
             return groups;
         } case 'FindById': {
-            const group = await Groups.findById(data);
+            const group = await Category.findById(data);
             return group;
         } case 'FindByName': {
-            const group = await Groups.findOne({ GroupName: data });
+            const group = await Category.findOne({ GroupName: data });
             return group;
         }
         default:
             return 'داده ای یافت نشد';
     }
 }
+
 module.exports = {
     returnChannel,
     pushToQueue,
