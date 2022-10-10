@@ -75,7 +75,7 @@ module.exports = class configurationBot {
                     });
                 } else if (text.length <= 6) {
                     await pushToQueue("DB_BOT", { Request: "Companies", Type: "FindByName", Body: text });
-                    const { channel } = await createQueue("CompaniesFindByName");
+                    const channel = await createQueue("CompaniesFindByName");
                     channel.consume("CompaniesFindByName", async (msg) => {
                         const { Data } = JSON.parse(msg.content.toString());
                         channel.ack(msg);
@@ -99,7 +99,7 @@ module.exports = class configurationBot {
                     });
                 } else if (text === "🏢 شرکت ها") {
                     await pushToQueue("DB_BOT", { Request: "Companies", Type: "All" });
-                    const { channel } = await createQueue("CompaniesAll");
+                    const channel = await createQueue("CompaniesAll");
                     channel.consume("CompaniesAll", async (msg) => {
                         const { Data } = JSON.parse(msg.content.toString());
                         channel.ack(msg);
@@ -109,9 +109,10 @@ module.exports = class configurationBot {
                             },
                         });
                     });
+
                 } else if (text === "🗂 دسته بندی") {
                     await pushToQueue("DB_BOT", { Request: "Groups", Type: "All" });
-                    const { channel } = await createQueue("GroupsAll");
+                    const channel = await createQueue("GroupsAll");
                     channel.consume("GroupsAll", async (msg) => {
                         const Data = JSON.parse(msg.content.toString());
                         channel.ack(msg);
@@ -129,7 +130,7 @@ module.exports = class configurationBot {
                 }
             } else if (this.#isSearch) {
                 await pushToQueue("DB_BOT", { Request: "Companies", Type: "Search", Body: text });
-                const { channel } = await createQueue("CompaniesSearch");
+                const channel = await createQueue("CompaniesSearch");
                 channel.consume("CompaniesSearch", async (msg) => {
                     const { Data } = JSON.parse(msg.content.toString());
                     channel.ack(msg);
@@ -147,7 +148,42 @@ module.exports = class configurationBot {
             }
         });
     }
+    initCommand() {
+        this.#bot.command("symbol_list", async (ctx) => {
+            await pushToQueue("DB_BOT", { Request: "Companies", Type: "All" });
+            const channel = await createQueue("CompaniesAll");
+            channel.consume("CompaniesAll", async (msg) => {
+                const { Data } = JSON.parse(msg.content.toString());
+                channel.ack(msg);
+                ctx.reply(
+                    "لیست سهام توی دکمه ها وجود داره میتونی هرکدومشون رو کلیک کنی تا جزییاتشو ببینی",
+                    {
+                        reply_markup: {
+                            keyboard: await symbolButtonList(Data),
+                        },
+                    }
+                );
+            });
+        });
+
+        this.#bot.command("groups_list", async (ctx) => {
+            await pushToQueue("DB_BOT", { Request: "Groups", Type: "All" });
+            const channel = await createQueue("GroupsAll");
+            channel.consume("GroupsAll", async (msg) => {
+                const Data = JSON.parse(msg.content.toString());
+                channel.ack(msg);
+                ctx.reply("لیست دسته بندی", {
+                    reply_markup: {
+                        keyboard: await categorizedButtonList(Data),
+                    },
+                });
+            });
+        });
+    }
     startBot() {
+        this.initCommand();
+        this.initReaction();
+        this.initText();
         this.#bot.launch()
             .then(() => { console.log("Connected To Telegram ✔") })
             .catch((err) => {
