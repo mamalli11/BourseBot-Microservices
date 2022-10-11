@@ -12,7 +12,7 @@ const connectTochannel = async () => {
         console.log("Connected to rabbitmq server ✔");
         return await connection.createChannel();
     } catch (error) {
-        console.log("cannot connect to rabbitmq server");
+        console.log("cannot connect to rabbitmq server ❌");
     }
 };
 
@@ -43,6 +43,7 @@ const processingRequestsQueue = async (queueName) => {
     channel.consume(queueName, async (msg) => {
         if (msg.content) {
             const { Request, Type, Body } = JSON.parse(msg.content.toString());
+            console.log({ Request, Type, Body });
             let Data;
             switch (Request) {
                 case 'Companies':
@@ -78,13 +79,12 @@ const handelReqScraping = async (Type, data) => {
                     })
                 }
                 await Companies.create({ ...data, categoryID: catID, });
-                return 'companie Created!';
+                break;
             } case 'Update': {
-                const companie = await Companies.findById(data);
+                const companie = await Companies.findByIdAndUpdate(data._id, { ...data });
                 return companie;
             }
-            default:
-                return 'داده ای یافت نشد';
+            default: return 'داده ای یافت نشد';
         }
     } catch (error) {
         console.log(error);
@@ -106,8 +106,7 @@ const handelReqCompanies = async (Type, data) => {
             const companie = await Companies.find({ symbol: { $regex: data } });
             return companie;
         }
-        default:
-            return 'داده ای یافت نشد';
+        default: return 'داده ای یافت نشد';
     }
 }
 
@@ -123,8 +122,7 @@ const handelReqGroups = async (Type, data) => {
             const group = await Category.findOne({ GroupName: data });
             return group;
         }
-        default:
-            return 'داده ای یافت نشد';
+        default: return 'داده ای یافت نشد';
     }
 }
 

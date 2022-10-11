@@ -1,5 +1,8 @@
 const amqp = require("amqplib");
 
+const { ScrapeAllStock } = require('../handler/scrapeAllStock');
+const { ScrapeStock } = require('../handler/scrapeStock');
+
 let channel;
 
 const connectTochannel = async () => {
@@ -25,32 +28,37 @@ const createQueue = async (queueName) => {
 
 const pushToQueue = async (queueName, data) => {
     try {
-        await returnChannel();
         await channel.assertQueue(queueName);
         return channel.sendToQueue(queueName, Buffer.from(JSON.stringify(data)));
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
     }
 };
 
-const createOrderWithQueue = async (queueName) => {
-    await createQueue(queueName);
-    channel.consume(queueName, async (msg) => {
-        if (msg.content) {
-            const { products, userEmail } = JSON.parse(msg.content.toString());
-            const newOrder = new orderModel({
-                products,
-                userEmail,
-                totalPrice: products
-                    .map((p) => +p.price)
-                    .reduce((prev, curr) => prev + curr, 0),
-            });
-            await newOrder.save();
-            channel.ack(msg);
-            pushToQueue("PRODUCT", newOrder);
-            console.log("saved order : ", newOrder._id);
-        }
-    });
+const webScraperServices = async (queueName) => {
+    try {
+        await createQueue(queueName);
+        channel.consume(queueName, async (msg) => {
+            if (msg.content) {
+                const { Type, Body } = JSON.parse(msg.content.toString());
+                console.log(`Received ${Type} Body :${Body}  ✔`);
+                switch (Type) {
+                    case 'All':
+                        ScrapeAllStock.main();
+                        break;
+                    case 'One':
+                        ScrapeStock.main(Body);
+                        break;
+                    default:
+                        break;
+                }
+
+                channel.ack(msg);
+            }
+        });
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 module.exports = {
@@ -58,5 +66,5 @@ module.exports = {
     pushToQueue,
     connectTochannel,
     createQueue,
-    createOrderWithQueue,
+    webScraperServices,
 };
