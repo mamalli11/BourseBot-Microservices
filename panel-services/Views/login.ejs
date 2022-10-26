@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html direction="rtl" dir="rtl" style="direction: rtl">
+
+	<head>
+		<!--end::Base Path -->
+		<meta charset="utf-8" />
+		<title>Metronic | Login Page</title>
+		<meta name="description" content="Login page example">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!--begin::Page Custom Styles(used by this page) -->
+		<link href="/assets/css/pages/general/login/login-3.rtl.css" rel="stylesheet" type="text/css" />
+		<!--end::Page Custom Styles -->
+
+		<!--begin:: Global Mandatory Vendors -->
+		<link href="/assets/vendors/general/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
+		<!--end:: Global Mandatory Vendors -->
+
+		<!--begin::Global Theme Styles(used by all pages) -->
+		<link href="/assets/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
+		<!--end::Global Theme Styles -->
+
+		<!--begin::Layout Skins(used by all pages) -->
+		<link href="/assets/css/skins/header/base/light.css" rel="stylesheet" type="text/css" />
+		<link href="/assets/css/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
+		<link href="/assets/css/skins/brand/dark.css" rel="stylesheet" type="text/css" />
+		<link href="/assets/css/skins/aside/dark.css" rel="stylesheet" type="text/css" />
+
+		<!--end::Layout Skins -->
+		<link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
+	</head>
+
+	<body
+		class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
+
+		<div class="kt-grid kt-grid--ver kt-grid--root">
+			<div class="kt-grid kt-grid--hor kt-grid--root  kt-login kt-login--v3 kt-login--signin" id="kt_login">
+				<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
+					style="background-image: url(/assets/media/bg/bg-2.jpg);">
+					<div class="kt-grid__item kt-grid__item--fluid kt-login__wrapper">
+						<div class="kt-login__container">
+							<div class="kt-login__logo">
+								<a href="#">
+									<img src="/assets/media/logos/logo-5.png">
+								</a>
+							</div>
+							<div class="kt-login__signin">
+								<div class="kt-login__head">
+									<h3 class="kt-login__title">Sign In To Admin</h3>
+								</div>
+								<%- include("./errors/loginMessages.ejs") %>
+								<form class="kt-form" action="/users/login" method="POST">
+									<div class="input-group">
+										<input class="form-control" type="text" placeholder="ایمیل" name="email"
+											autocomplete="off">
+									</div>
+									<div class="input-group">
+										<input class="form-control" type="password" placeholder="گذرواژه" name="password">
+									</div>
+									<div class="input-group" style="justify-content: center; margin-top: 15px;">
+										<div class="g-recaptcha" data-sitekey="6LfwMNYZAAAAACXkchvooNSZ1y0UpixCDCqcMmBA"></div>
+									</div>
+									<div class="row kt-login__extra">
+										<div class="col">
+											<label class="kt-checkbox">
+												<input type="checkbox" name="remember" value="remember-me" checked> مرا به خاطر بسپار
+												<span></span>
+											</label>
+										</div>
+										<div class="col kt-align-right">
+											<a href="javascript:;" id="kt_login_forgot" class="kt-login__link">فراموشی رمز عبور ?</a>
+										</div>
+									</div>
+									<div class="kt-login__actions">
+										<button id="kt_login_signin_submit" type="submit" 
+											class="btn btn-brand btn-elevate kt-login__btn-primary">ورود</button>
+									</div>
+								</form>
+							</div>
+							<div class="kt-login__forgot">
+								<div class="kt-login__head">
+									<h3 class="kt-login__title">رمز عبور را فراموش کرده اید ?</h3>
+									<div class="kt-login__desc">ایمیل تان را وارد کنید تا پسوردتان ریست شود:</div>
+								</div>
+								<form class="kt-form" action="">
+									<div class="input-group">
+										<input class="form-control" type="text" placeholder="ایمیل" name="email" id="kt_email" autocomplete="off">
+									</div>
+									<div class="kt-login__actions">
+										<button id="kt_login_forgot_submit"
+											class="btn btn-brand btn-elevate kt-login__btn-primary">ارسال درخواست</button>&nbsp;&nbsp;
+										<button id="kt_login_forgot_cancel"
+											class="btn btn-light btn-elevate kt-login__btn-secondary">بی خیال</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--begin:: Global Mandatory Vendors -->
+		<script src="/assets/vendors/general/jquery/dist/jquery.js" type="text/javascript"></script>
+		<script src="/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+		<!--end:: Global Mandatory Vendors -->
+
+		<!--begin::Global Theme Bundle(used by all pages) -->
+		<script src="/assets/js/scripts.bundle.js" type="text/javascript"></script>
+		<!--end::Global Theme Bundle -->
+
+		<!--begin::Page Scripts(used by this page) -->
+		<script src="/assets/js/pages/login/login-general.js" type="text/javascript"></script>
+		
+		<script src="https://www.google.com/recaptcha/api.js?hl=fa" async defer></script>
+		<script src="/assets/js/pages/login/login-general.js" type="text/javascript"></script>
+		<!--end::Page Scripts -->
+	</body>
+
+</html>

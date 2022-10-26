@@ -1,6 +1,6 @@
 const request = require("request-promise");
 
-const { IdValidator } = require("./../utils/IdValidator");
+const { IdValidator } = require("../../../utils/IdValidator");
 
 class indexController {
   async index(req, res, next) {

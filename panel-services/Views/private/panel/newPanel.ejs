@@ -1,0 +1,617 @@
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <!--begin::Portlet-->
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            مشخصات محصول جدید را وارد کنید
+                        </h3>
+                    </div>
+                </div>
+                <!--begin::Form-->
+                <form class="kt-form kt-form--label-right" method="post" enctype="multipart/form-data" role="form"
+                    onsubmit="event.preventDefault(); saveNewProducts(event)" id="newPrdForm">
+                    <div class="kt-portlet__body">
+                        <div class="form-group row form-group-marginless kt-margin-t-20">
+                            <label class="col-lg-1 col-form-label">نام محصول:</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" placeholder="نام محصول را وارد کنید" name="Name">
+                                <!-- <span class="form-text text-muted">Please enter your full name</span> -->
+                            </div>
+                            <label class="col-lg-1 col-form-label">مدت زمان:</label>
+                            <div class="col-lg-3">
+                                <input type="number" class="form-control" placeholder="مدت زمان سرویس" min="1"
+                                    name="Time">
+                                <span class="form-text text-muted">لطفا مدت زمان سرویس را به روز وارد کنید</span>
+                            </div>
+                            <label class="col-lg-1 col-form-label">میزان ترافیک:</label>
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <input type="number" min="1" class="form-control"
+                                        placeholder="حداکثر میزان ترافیک مصرفی را وارد کنید" name="MaxTraffic">
+                                </div>
+                                <span class="form-text text-muted">حداکثر میزان مصرافی را به عدد وارد کنید</span>
+                            </div>
+                        </div>
+                        <div
+                            class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit">
+                        </div>
+                        <div class="form-group row form-group-marginless">
+                            <label class="col-lg-1 col-form-label">سرعت:</label>
+                            <div class="col-lg-3">
+                                <input type="number" min="1" class="form-control" placeholder="مثلا 8MB" name="Speed">
+                                <span class="form-text text-muted">میزان سرعت را به MB وارد کنید</span>
+                            </div>
+                            <label class="col-lg-1 col-form-label">قیمت:</label>
+                            <div class="col-lg-3">
+                                <div class="kt-input-icon">
+                                    <input type="text" class="form-control" placeholder="قیمت"
+                                        onkeyup="javascript:this.value=separate(this.value);" name="Price">
+                                    <span class="kt-input-icon__icon kt-input-icon__icon--right"><span>
+                                            <i class="flaticon-price-tag"></i></span></span>
+                                </div>
+                                <span class="form-text text-muted">قیمت را به ریال وارد کنید</span>
+                            </div>
+                            <label class="col-lg-1 col-form-label">تخفیف:</label>
+                            <div class="col-lg-3">
+                                <div class="kt-input-icon">
+                                    <input type="text" maxlength="3" minlength="1" class="form-control"
+                                        placeholder="میزان درصد تخفیف را وارد کنید" name="Discount">
+                                    <span class="kt-input-icon__icon kt-input-icon__icon--right"><span>
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                                viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect id="bound" x="0" y="0" width="24" height="24" />
+                                                    <polygon id="Combined-Shape" fill="#000000" opacity="0.3"
+                                                        points="12 20.0218549 8.47346039 21.7286168 6.86905972 18.1543453 3.07048824 17.1949849 4.13894342 13.4256452 1.84573388 10.2490577 5.08710286 8.04836581 5.3722735 4.14091196 9.2698837 4.53859595 12 1.72861679 14.7301163 4.53859595 18.6277265 4.14091196 18.9128971 8.04836581 22.1542661 10.2490577 19.8610566 13.4256452 20.9295118 17.1949849 17.1309403 18.1543453 15.5265396 21.7286168" />
+                                                    <polygon id="Stroke-1" fill="#000000"
+                                                        points="14.0890818 8.60255815 8.36079737 14.7014391 9.70868621 16.049328 15.4369707 9.950447" />
+                                                    <path
+                                                        d="M10.8543431,9.1753866 C10.8543431,10.1252593 10.085524,10.8938719 9.13585777,10.8938719 C8.18793881,10.8938719 7.41737243,10.1252593 7.41737243,9.1753866 C7.41737243,8.22551387 8.18793881,7.45690126 9.13585777,7.45690126 C10.085524,7.45690126 10.8543431,8.22551387 10.8543431,9.1753866"
+                                                        id="Fill-2" fill="#000000" opacity="0.3" />
+                                                    <path
+                                                        d="M14.8641422,16.6221564 C13.9162233,16.6221564 13.1456569,15.8535438 13.1456569,14.9036711 C13.1456569,13.9520555 13.9162233,13.1851857 14.8641422,13.1851857 C15.8138085,13.1851857 16.5826276,13.9520555 16.5826276,14.9036711 C16.5826276,15.8535438 15.8138085,16.6221564 14.8641422,16.6221564 Z"
+                                                        id="Fill-4" fill="#000000" opacity="0.3" />
+                                                </g>
+                                            </svg>
+                                        </span></span>
+                                </div>
+                                <span class="form-text text-muted">میزان تخفیف را به درصد وارد کنید و یا خالی رها
+                                    کنید</span>
+                            </div>
+                        </div>
+                        <div
+                            class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit">
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-1 col-form-label">نوع محصول :</label>
+                            <div class="col-lg-3">
+                                <select class="form-control kt-select2" id="selectCategory" name="Category">
+                                    <option value="vpn">VPN</option>
+                                    <option value="vps">VPS</option>
+                                    <option value="ping_reduction">Ping Reduction</option>
+                                    <option value="ip_static">Ip Static</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3" style="margin: 10px;">
+                                <label class="kt-checkbox kt-checkbox--bold kt-checkbox--brand">
+                                    <input type="checkbox" name="VIP"> VIP
+                                    <span></span>
+                                </label>
+                            </div>
+
+                            <label class="col-lg-1 col-form-label">فایل کانفیگ:</label>
+                            <div class="col-lg-3">
+                                <div class="kt-input-icon">
+                                    <input type="file" class="form-control" name="ConfigFile" id="ConfigFile">
+                                    <span class="kt-input-icon__icon kt-input-icon__icon--right">
+                                        <span><i class="fa fa-file-upload"></i></span>
+                                    </span>
+                                </div>
+                                <span class="form-text text-muted">فایل کانفیگ را انتخاب کنید</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-1 col-form-label">توضیحات:</label>
+                            <div class="col-lg-4">
+                                <div class="kt-input-icon">
+                                    <textarea name="Description" cols="15" rows="5" class="form-control"
+                                        placeholder="توضیحات را وارد کنید"></textarea>
+                                </div>
+                            </div>
+                            <label class="col-lg-1 col-form-label">کشور :</label>
+                            <div class="col-lg-3">
+                                <select class="form-control kt-select2" id="kt_select2_3" name="Country"
+                                    multiple="multiple">
+                                    <option value="Afghanistan">افغانستان</option>
+                                    <option value="Aland Islands">جزایر الند</option>
+                                    <option value="Albania">آلبانی</option>
+                                    <option value="Algeria">الجزایر</option>
+                                    <option value="American Samoa">ساموآ آمریکایی</option>
+                                    <option value="Andorra">آندورا</option>
+                                    <option value="Angola">آنگولا</option>
+                                    <option value="Anguilla">آنگویلا</option>
+                                    <option value="Antarctica">جنوبگان</option>
+                                    <option value="Antigua and Barbuda">آنتیگوا و باربودا</option>
+                                    <option value="Argentina">آرژانتین</option>
+                                    <option value="Armenia">ارمنستان</option>
+                                    <option value="Aruba">آروبا</option>
+                                    <option value="Australia">استرالیا</option>
+                                    <option value="Austria">اتریش</option>
+                                    <option value="Azerbaijan">آذربایجان</option>
+                                    <option value="Bahamas">باهاما</option>
+                                    <option value="Bahrain">بحرین</option>
+                                    <option value="Bangladesh">بنگلادش</option>
+                                    <option value="Barbados">باربادوس</option>
+                                    <option value="Belarus">بلاروس</option>
+                                    <option value="Belgium">بلژیک</option>
+                                    <option value="Belize">بلیز</option>
+                                    <option value="Benin">بنین</option>
+                                    <option value="Bermuda">برمودا</option>
+                                    <option value="Bhutan">بوتان</option>
+                                    <option value="Bolivia">بولیوی</option>
+                                    <option value="Bonaire">بونیر</option>
+                                    <option value="Bosnia and Herzegovina">بوسنی و هرزگوین</option>
+                                    <option value="Botswana">بوتسوانا</option>
+                                    <option value="Bouvet Island">جزیره بووت</option>
+                                    <option value="Brazil">برزیل</option>
+                                    <option value="Bulgaria">بلغارستان</option>
+                                    <option value="Burkina Faso">بورکینافاسو</option>
+                                    <option value="Burundi">بوروندی</option>
+                                    <option value="Cambodia">کامبوج</option>
+                                    <option value="Cameroon">کامرون</option>
+                                    <option value="Canada">کانادا</option>
+                                    <option value="African">آفریقای</option>
+                                    <option value="Chad">چاد</option>
+                                    <option value="Chile">شیلی</option>
+                                    <option value="China">چین</option>
+                                    <option value="Christmas Island">جزیره کریسمس</option>
+                                    <option value="Cocos ">کوکوس</option>
+                                    <option value="Colombia">کلمبیا</option>
+                                    <option value="Comoros">کومور</option>
+                                    <option value="Congo">کنگو</option>
+                                    <option value="Congo">کنگو</option>
+                                    <option value="Cook Islands">جزایر کوک</option>
+                                    <option value="Costa Rica">کاستاریکا</option>
+                                    <option value="Croatia">کرواسی</option>
+                                    <option value="Cuba">کوبا</option>
+                                    <option value="Curacao">کوراکائو</option>
+                                    <option value="Cyprus">قبرس</option>
+                                    <option value="Czech Republic">جمهوری چک</option>
+                                    <option value="Denmark">دانمارک</option>
+                                    <option value="Djibouti">جیبوتی</option>
+                                    <option value="Dominica">دومینیکا</option>
+                                    <option value="Ecuador">اکوادور</option>
+                                    <option value="Egypt">مصر</option>
+                                    <option value="Eritrea">اریتره</option>
+                                    <option value="Estonia">استونی</option>
+                                    <option value="Ethiopia">اتیوپی</option>
+                                    <option value="Fiji">فیجی</option>
+                                    <option value="Finland">فنلاند</option>
+                                    <option value="France">فرانسه</option>
+                                    <option value="Gabon">گابن</option>
+                                    <option value="Gambia">گامبیا</option>
+                                    <option value="Georgia">گرجستان</option>
+                                    <option value="Germany">آلمان</option>
+                                    <option value="Ghana">غنا</option>
+                                    <option value="Gibraltar">جبل الطارق</option>
+                                    <option value="Greece">یونان</option>
+                                    <option value="Greenland">گرینلند</option>
+                                    <option value="Grenada">گرنادا</option>
+                                    <option value="Guadeloupe">گوادلوپ</option>
+                                    <option value="Guam">گوام</option>
+                                    <option value="Guatemala">گواتمالا</option>
+                                    <option value="Guernsey">گرنزی</option>
+                                    <option value="Guinea">گینه</option>
+                                    <option value="Guyana">گویان</option>
+                                    <option value="Haiti">هائیتی</option>
+                                    <option value="Honduras">هندوراس</option>
+                                    <option value="Hong Kong">هنگ کنگ</option>
+                                    <option value="Hungary">مجارستان</option>
+                                    <option value="Iceland">ایسلند</option>
+                                    <option value="India">هند</option>
+                                    <option value="Indonesia">اندونزی</option>
+                                    <option value="Iran">ایران</option>
+                                    <option value="Iraq">عراق</option>
+                                    <option value="Ireland">ایرلند</option>
+                                    <option value="Israel">اسرائيل</option>
+                                    <option value="Italy">ایتالیا</option>
+                                    <option value="Jamaica">جامائیکا</option>
+                                    <option value="Japan">ژاپن</option>
+                                    <option value="Jersey">پیراهن ورزشی</option>
+                                    <option value="Jordan">اردن</option>
+                                    <option value="Kazakhstan">قزاقستان</option>
+                                    <option value="Kenya">کنیا</option>
+                                    <option value="Kiribati">کیریباتی</option>
+                                    <option value="Korea">کره</option>
+                                    <option value="Kosovo">کوزوو</option>
+                                    <option value="Kuwait">کویت</option>
+                                    <option value="Kyrgyzstan">قرقیزستان</option>
+                                    <option value="Latvia">لتونی</option>
+                                    <option value="Lebanon">لبنان</option>
+                                    <option value="Lesotho">لسوتو</option>
+                                    <option value="Liberia">لیبریا</option>
+                                    <option value="Libyan">لیبی</option>
+                                    <option value="Liechtenstein">لیختن اشتاین</option>
+                                    <option value="Lithuania">لیتوانی</option>
+                                    <option value="Luxembourg">لوکزامبورگ</option>
+                                    <option value="Macao">ماکائو</option>
+                                    <option value="Macedonia">مقدونیه</option>
+                                    <option value="Madagascar">ماداگاسکار</option>
+                                    <option value="Malawi">مالاوی</option>
+                                    <option value="Malaysia">مالزی</option>
+                                    <option value="Maldives">مالدیو</option>
+                                    <option value="Mali">مالی</option>
+                                    <option value="Malta">مالت</option>
+                                    <option value="Marshall Islands">جزایر مارشال</option>
+                                    <option value="Martinique">مارتینیک</option>
+                                    <option value="Mauritania">موریتانی</option>
+                                    <option value="Mauritius">موریس</option>
+                                    <option value="Mayotte">مایوت</option>
+                                    <option value="Mexico">مکزیک</option>
+                                    <option value="Monaco">موناکو</option>
+                                    <option value="Mongolia">مغولستان</option>
+                                    <option value="Montenegro">مونته نگرو</option>
+                                    <option value="Montserrat">مونتسرات</option>
+                                    <option value="Morocco">مراکش</option>
+                                    <option value="Mozambique">موزامبیک</option>
+                                    <option value="Myanmar">میانمار</option>
+                                    <option value="Namibia">ناميبيا</option>
+                                    <option value="Nauru">نائورو</option>
+                                    <option value="Nepal">نپال</option>
+                                    <option value="Netherlands">هلند</option>
+                                    <option value="New Zealand">نیوزلند</option>
+                                    <option value="Nicaragua">نیکاراگوئه</option>
+                                    <option value="Niger">نیجر</option>
+                                    <option value="Nigeria">نیجریه</option>
+                                    <option value="Niue">نیوئه</option>
+                                    <option value="Norway">نروژ</option>
+                                    <option value="Oman">عمان</option>
+                                    <option value="Pakistan">پاکستان</option>
+                                    <option value="Palau">پالائو</option>
+                                    <option value="Palestinian">فلسطین</option>
+                                    <option value="Panama">پاناما</option>
+                                    <option value="Paraguay">پاراگوئه</option>
+                                    <option value="Peru">پرو</option>
+                                    <option value="Philippines">فیلیپین</option>
+                                    <option value="Pitcairn">پیتکرن</option>
+                                    <option value="Poland">لهستان</option>
+                                    <option value="Portugal">کشور پرتغال</option>
+                                    <option value="Puerto Rico">پورتوریکو</option>
+                                    <option value="Qatar">قطر</option>
+                                    <option value="Reunion">تجدید دیدار</option>
+                                    <option value="Romania">رومانی</option>
+                                    <option value="Russian">روسیه</option>
+                                    <option value="Rwanda">رواندا</option>
+                                    <option value="Samoa">ساموآ</option>
+                                    <option value="San Marino">سان مارینو</option>>
+                                    <option value="Saudi Arabia">عربستان سعودی</option>
+                                    <option value="Senegal">سنگال</option>
+                                    <option value="Serbia">صربستان</option>
+                                    <option value="Seychelles">سیشل</option>
+                                    <option value="Sierra Leone">سیرا لئون</option>
+                                    <option value="Singapore">سنگاپور</option>
+                                    <option value="Sint Maarten">سنت مارتین</option>
+                                    <option value="Slovakia">اسلواکی</option>
+                                    <option value="Slovenia">اسلوونی</option>
+                                    <option value="Somalia">سومالی</option>
+                                    <option value="South Africa">آفریقای جنوبی</option>
+                                    <option value="South Sudan">سودان جنوبی</option>
+                                    <option value="Spain">اسپانیا</option>
+                                    <option value="Sri Lanka">سری لانکا</option>
+                                    <option value="Sudan">سودان</option>
+                                    <option value="Suriname">سورینام</option>
+                                    <option value="Swaziland">سوازیلند</option>
+                                    <option value="Sweden">سوئد</option>
+                                    <option value="Switzerland">سوئیس</option>
+                                    <option value="Syrian">سوریه</option>
+                                    <option value="Taiwan">تایوان</option>
+                                    <option value="Tajikistan">تاجیکستان</option>
+                                    <option value="Thailand">تایلند</option>
+                                    <option value="Togo">رفتن</option>
+                                    <option value="Tokelau">توكلائو</option>
+                                    <option value="Tonga">تونگا</option>
+                                    <option value="Tunisia">تونس</option>
+                                    <option value="Turkey">بوقلمون</option>
+                                    <option value="Turkmenistan">ترکمنستان</option>
+                                    <option value="Tuvalu">تووالو</option>
+                                    <option value="Uganda">اوگاندا</option>
+                                    <option value="Ukraine">اوکراین</option>
+                                    <option value="United Arab Emirates">امارات متحده عربی</option>
+                                    <option value="United Kingdom">انگلستان</option>
+                                    <option value="United States">ایالات متحده</option>
+                                    <option value="Uruguay">اروگوئه</option>
+                                    <option value="Uzbekistan">ازبکستان</option>
+                                    <option value="Vanuatu">وانواتو</option>
+                                    <option value="Venezuela">ونزوئلا</option>
+                                    <option value="Viet Nam">ویتنام</option>
+                                    <option value="Virgin Islands">جزایر ویرجین</option>
+                                    <option value="Yemen">یمن</option>
+                                    <option value="Zambia">زامبیا</option>
+                                    <option value="Zimbabwe">زیمبابوه</option>
+                                </select>
+                                <span class="form-text text-muted">محل استقرار سرور</span>
+                            </div>
+                        </div>
+                        <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg"></div>
+                        <div id="kt_repeater_1">
+                            <div class="form-group form-group-last row" id="kt_repeater_1">
+                                <label class="col-lg-2 col-form-label">لایسنس:</label>
+                                <div data-repeater-list="" class="col-lg-10">
+                                    <div data-repeater-item class="form-group row align-items-center">
+                                        <div class="col-md-4">
+                                            <div class="kt-form__group--inline">
+                                                <div class="kt-form__label">
+                                                    <label>Username:</label>
+                                                </div>
+                                                <div class="kt-form__control">
+                                                    <input type="text" class="form-control" placeholder="Enter Username"
+                                                        id="License_Username">
+                                                </div>
+                                            </div>
+                                            <div class="d-md-none kt-margin-b-10"></div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="kt-form__group--inline">
+                                                <div class="kt-form__label">
+                                                    <label class="kt-label m-label--single">Password:</label>
+                                                </div>
+                                                <div class="kt-form__control">
+                                                    <input type="text" class="form-control" placeholder="Enter Password"
+                                                        id="License_Password">
+                                                </div>
+                                            </div>
+                                            <div class="d-md-none kt-margin-b-10"></div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="kt-radio-inline">
+                                                <label class="kt-checkbox kt-checkbox--state-success">
+                                                    <input type="checkbox" id="License_Used"> استفاده شد
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a id="btnSaveLicense" onclick="addItem()"
+                                                class="btn-sm btn btn-label-success btn-bold">
+                                                <i class="la la-save"></i>ذخیره
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                    <div id="showLicenseList" class="col-lg-10">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__foot">
+                        <div class="kt-form__actions">
+                            <div class="row">
+                                <div class="col-lg-5"></div>
+                                <div class="col-lg-7">
+                                    <button type="submit"
+                                        class="btn btn-success btn-elevate btn-elevate-air btn-wide">ذخیره</button>
+                                    <button type="reset" class="btn btn-elevate btn-elevate-air btn-danger">بی
+                                        خیال</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!--end::Form-->
+            </div>
+
+            <!--end::Portlet-->
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let LicenseItem = [];
+
+    // num = num.replace(/,\s?/g, "");
+    function separate(Number) {
+        Number += '';
+        Number = Number.replace(',', ''); Number = Number.replace(',', ''); Number = Number.replace(',', '');
+        Number = Number.replace(',', ''); Number = Number.replace(',', ''); Number = Number.replace(',', '');
+        x = Number.split('.');
+        y = x[0];
+        z = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(y))
+            y = y.replace(rgx, '$1' + ',' + '$2');
+        return y + z;
+    }
+
+    const saveNewProducts = () => {
+        // Text
+        const Name = document.getElementsByName('Name')[0].value;
+        const Time = document.getElementsByName('Time')[0].value;
+        const MaxTraffic = document.getElementsByName('MaxTraffic')[0].value;
+        const Speed = document.getElementsByName('Speed')[0].value;
+        const Price = document.getElementsByName('Price')[0].value;
+        const Discount = document.getElementsByName('Discount')[0].value;
+
+        // Textarea
+        const Description = document.getElementsByName('Description')[0].value;
+
+        // CheckBox
+        const VIP = document.getElementsByName('VIP')[0].checked;
+
+        // Option
+        const Category = document.querySelectorAll('#selectCategory :checked')[0].value;
+        const Country = document.querySelectorAll('#kt_select2_3 :checked');
+        const selectCountry = [...Country].map(option => option.value);
+        // File
+        const ConfigFile = document.getElementById('ConfigFile');
+
+        const Toast = Swal.mixin({
+            position: "center",
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+        });
+
+        let data = new FormData();
+        data.append('Name', Name);
+        data.append('Time', Time);
+        data.append('MaxTraffic', MaxTraffic);
+        data.append('Speed', Speed);
+        data.append('Price', Price);
+        data.append('Discount', Discount);
+        data.append('Description', Description);
+        data.append('VIP', VIP);
+        data.append("ConfigFile", ConfigFile.files[0]);
+        data.append("Category", Category);
+        selectCountry.forEach((item) => { data.append('Country', item); });
+        data.append("Licenses", JSON.stringify(LicenseItem));
+
+        let config = {
+            method: 'post',
+            url: '/dashboard/Products/new',
+            headers: { 'Content-Type': 'multipart/form-data' },
+            data: data
+        };
+
+        axios(config)
+            .then((response) => {
+
+                Toast.fire({
+                    icon: response.data.status,
+                    title: response.data.message,
+                });
+
+                setTimeout(function () { location.reload(); }, 1600);
+            })
+            .catch(({ response }) => {
+                console.log(response.data);
+                return Toast.fire({
+                    icon: response.data.status,
+                    title: response.data.message,
+                });
+            });
+    };
+
+    const addItem = () => {
+        const Toast = Swal.mixin({
+            position: "center",
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+        });
+
+        const showLicenseList = document.querySelector("#showLicenseList");
+
+        const Username = document.getElementById("License_Username");
+        const Password = document.getElementById("License_Password");
+        const Used = document.getElementById("License_Used");
+        const btnSaveLicense = document.getElementById("btnSaveLicense");
+        const btnDeleteLicense = document.getElementById("btnDeleteLicense");
+
+        if (LicenseItem.find((item) => item.Title == Username.value)) {
+            return Toast.fire({
+                icon: "error",
+                title: "عنوان وارد شده تکراری می باشد",
+            });
+        }
+        if (Username.value.trim().length < 4) {
+            return Toast.fire({
+                icon: "error",
+                title: "عنوان وارد شده نباید کمتر از 4 باشد",
+            });
+        }
+        LicenseItem.push({
+            Username: Username.value.trim(),
+            Password: Password.value.trim(),
+            Used: Used.checked,
+        });
+
+        showLicenseList.innerHTML += `
+            <div data-repeater-item class="form-group row align-items-center" id="License_${Username.value}">
+                <div class="col-md-4">
+                    <div class="kt-form__group--inline">
+                        <div class="kt-form__label">
+                            <label>Username:</label>
+                        </div>
+                        <div class="kt-form__control">
+                            <input type="text" class="form-control" value="${Username.value}" disabled >
+                        </div>
+                    </div>
+                    <div class="d-md-none kt-margin-b-10"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="kt-form__group--inline">
+                        <div class="kt-form__label">
+                            <label class="kt-label m-label--single">Password:</label>
+                        </div>
+                        <div class="kt-form__control">
+                            <input type="text" class="form-control" disabled value="${Password.value}">
+                        </div>
+                    </div>
+                    <div class="d-md-none kt-margin-b-10"></div>
+                </div>
+                <div class="col-md-2">
+                    <div class="kt-radio-inline">
+                        <label class="kt-checkbox kt-checkbox--state-success">
+                            <input type="checkbox" ${Used.checked ? 'checked' : ''} disabled> استفاده شد
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <a onclick="removeItem('License_${Username.value}')" class="btn-sm btn btn-label-danger btn-bold">
+                        <i class="la la-trash-o"></i>حذف
+                    </a>
+                
+                </div>
+            </div>
+        `;
+
+
+        Username.value = "";
+        Password.value = "";
+        Used.checked = false;
+        // btnDeleteLicense.setAttribute("data-repeater-delete", Username.value);
+    };
+
+    const removeItem = (id) => {
+        const showAttrDiv = document.querySelector(`#${id}`);
+        showAttrDiv.remove();
+
+        const cloneLicenseItem = LicenseItem.filter(
+            (item) => item.Username != id.split("_")[1]
+        );
+        LicenseItem = [...cloneLicenseItem];
+    };
+
+
+</script>
