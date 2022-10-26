@@ -44,10 +44,11 @@ module.exports.startMessage = (pelan = "Bronze") => {
 module.exports.symbolDetail = (data) => {
   return `
     📊 سهام : ${data.symbol}
+    🛒 مارکت : ${data.market}
     حجم معاملات : ${addUnit(data.volume)}
 
-    درصد خرید حقیقی : ${data.realBuyPercent}%
-    درصد فروش حقیقی : ${data.realSellPercent}%
+    خریدار حقیقی : ${data.buyerNumberPerson}%
+    فروشنده حقیقی : ${data.sellerNumberPerson}%
 
     ورود و خروج پول حقیقی : ${addUnit(data["enter_exit"])} تومان
     حجم میانگین ماه : ${addUnit(data.monthVolumeAvg)} 

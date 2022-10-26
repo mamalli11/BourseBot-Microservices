@@ -52,7 +52,7 @@ jspm_packages/
 logs/
 
 #Public directories
-public/img/
+*/public/dashboard/
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
