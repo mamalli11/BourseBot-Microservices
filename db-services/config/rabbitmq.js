@@ -2,6 +2,7 @@ const amqp = require("amqplib");
 
 const Companies = require("../models/Companies");
 const Category = require("../models/Category");
+const Users = require("../models/Users");
 
 
 let channel;
@@ -42,7 +43,7 @@ const processingRequestsQueue = async (queueName) => {
     await createQueue(queueName);
     channel.consume(queueName, async (msg) => {
         if (msg.content) {
-            const { Request, Type, Body } = JSON.parse(msg.content.toString());
+            const { Request, Type, Body, RPC } = JSON.parse(msg.content.toString());
             console.log({ Request, Type, Body });
             let Data;
             switch (Request) {
@@ -55,13 +56,22 @@ const processingRequestsQueue = async (queueName) => {
                 case 'Scraping':
                     Data = await handelReqScraping(Type, Body)
                     break;
+                case 'Users':
+                    Data = await handelReqUsers(Type, Body)
+                    break;
                 default:
                     Data = "NOT Defined"
                     break;
             }
 
             channel.ack(msg);
-            pushToQueue(Request + Type, { Data });
+            if (RPC) {
+                console.log(`RPC ${RPC} ✔ Data : ${Data} `);
+                channel.sendToQueue(msg.properties.replyTo, Buffer.from(JSON.stringify(Data)), {
+                    correlationId: msg.properties.correlationId
+                });
+            }
+            else pushToQueue(Request + Type, { Data });
             console.log(`sended ${Request} Type :${Type}  ✔`);
         }
     });
@@ -121,6 +131,22 @@ const handelReqGroups = async (Type, data) => {
         } case 'FindByName': {
             const group = await Category.findOne({ GroupName: data });
             return group;
+        }
+        default: return 'داده ای یافت نشد';
+    }
+}
+
+const handelReqUsers = async (Type, data) => {
+    switch (Type) {
+        case 'All': {
+            const users = await Users.find();
+            return users;
+        } case 'FindById': {
+            const user = await Users.findById(data);
+            return user;
+        } case 'FindByEmail': {
+            const user = await Users.findOne({ email: data });
+            return user;
         }
         default: return 'داده ای یافت نشد';
     }
