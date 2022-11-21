@@ -27,10 +27,12 @@
     "express-session": "^1.17.3",
     "jalali-moment": "^3.3.11",
     "mkdirp": "^1.0.4",
+    "mongoose": "^6.7.2",
     "mongoose-paginate-v2": "^1.7.1",
     "morgan": "^1.10.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
-    "request-promise": "^4.2.6"
+    "request-promise": "^4.2.6",
+    "uuid": "^9.0.0"
   }
 }

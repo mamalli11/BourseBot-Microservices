@@ -1,4 +1,4 @@
-const Role = require("../../Models/Role");
+const Role = require("../../models/Role");
 const helpers = require("../../helper/index");
 
 function check(Permission) {
