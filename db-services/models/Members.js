@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
         username: { type: String },
         phone: { type: String },
         is_bot: { type: Boolean },
-        pelan: { type: String, default: "Bronze", enum: ["Golden", "Silver", "Bronze"] },
+        plan: { type: String, default: "Bronze", enum: ["Golden", "Silver", "Bronze"] },
         isAdmin: { type: Boolean, default: false },
     },
     {
