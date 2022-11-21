@@ -24,7 +24,7 @@ module.exports = class Application {
     this.configApplication();
     this.initClientSession();
     this.initTemplateEngine();
-    // this.initRabbitMQ();
+    this.initRabbitMQ();
     this.createServer();
     this.createRoutes();
     this.errorHandling();
@@ -47,17 +47,17 @@ module.exports = class Application {
     this.#app.use(expressLayout);
     this.#app.set("view engine", "ejs");
     this.#app.set("views", "views");
-    this.#app.set("layout", "./layouts/dashLayout");
-    this.#app.use(function (req, res, next) {
-      res.locals = { USER: req.user };
-      next();
-    });
+    this.#app.set("layout", "../layouts/dashLayout");
+    // this.#app.use(function (req, res, next) {
+    //   res.locals = { USER: req.user };
+    //   next();
+    // });
   }
   initClientSession() {
-    this.#app.use(cookieParser("BHLXhOEr9pk9"));
+    this.#app.use(cookieParser(process.env.SESSION_SECRET));
     this.#app.use(
       session({
-        secret: "BHLXhOEr9pk9",
+        secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
         unset: "destroy",
@@ -70,8 +70,8 @@ module.exports = class Application {
     this.#app.use(flash()); //* Flash
   }
   initRabbitMQ() {
-    const { createOrderWithQueue } = require("./app/config/rabbitmq");
-    createOrderWithQueue("PANEL");
+    const { createPanelQueue } = require("./config/rabbitmq");
+    createPanelQueue("PANEL");
   }
   createRoutes() {
     this.#app.use(Routes);
@@ -79,6 +79,7 @@ module.exports = class Application {
   }
   errorHandling() {
     this.#app.use((error, req, res, next) => {
+      console.log(error);
       error.statusCode = error.statusCode || 500;
       error.status = error.status || "error";
       res.status(error.statusCode).json({

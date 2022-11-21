@@ -1,6 +1,8 @@
 const amqp = require("amqplib");
+const { v4: uuidv4 } = require('uuid');
 
 let channel;
+let uuid = uuidv4();
 
 const connectTochannel = async () => {
     try {
@@ -13,11 +15,13 @@ const connectTochannel = async () => {
 };
 
 const returnChannel = async () => {
-    if (!channel) { channel = await connectTochannel(); }
+    if (!channel) {
+        channel = await connectTochannel();
+    }
     return channel;
 };
 
-const createQueue = async (queueName) => {
+const createQueue = async (queueName, options) => {
     const channel = await returnChannel();
     await channel.assertQueue(queueName);
     return channel;
@@ -32,28 +36,43 @@ const pushToQueue = async (queueName, data) => {
     }
 };
 
-const createOrderWithQueue = async (queueName) => {
+const pushToRPCQueue = async (queueName, data) => {
+    try {
+        const assertedQueue = await channel.assertQueue("", { exclusive: true });
+        channel.sendToQueue(queueName, Buffer.from(JSON.stringify(data)), {
+            replyTo: assertedQueue.queue,
+            correlationId: uuid
+        });
+        return { assertedQueue, channel };
+
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const createPanelQueue = async (queueName) => {
     await createQueue(queueName);
-    channel.consume(queueName, async (msg) => {
-        if (msg.content) {
-            const { products, userEmail } = JSON.parse(msg.content.toString());
-            const newOrder = new orderModel({
-                products,
-                userEmail,
-                totalPrice: products.map((p) => +p.price).reduce((prev, curr) => prev + curr, 0),
-            });
-            await newOrder.save();
-            channel.ack(msg);
-            pushToQueue("PRODUCT", newOrder);
-            console.log("saved order : ", newOrder._id);
-        }
-    });
+    // channel.consume(queueName, async (msg) => {
+    //     if (msg.content) {
+    //         const { products, userEmail } = JSON.parse(msg.content.toString());
+    //         const newOrder = new orderModel({
+    //             products,
+    //             userEmail,
+    //             totalPrice: products.map((p) => +p.price).reduce((prev, curr) => prev + curr, 0),
+    //         });
+    //         await newOrder.save();
+    //         channel.ack(msg);
+    //         pushToQueue("PRODUCT", newOrder);
+    //         console.log("saved order : ", newOrder._id);
+    //     }
+    // });
 };
 
 module.exports = {
     returnChannel,
     pushToQueue,
+    pushToRPCQueue,
     connectTochannel,
     createQueue,
-    createOrderWithQueue,
+    createPanelQueue,
 };
