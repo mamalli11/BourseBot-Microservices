@@ -56,7 +56,6 @@ class UserController extends Controller {
         }
     }
     async rememberMe(req, res) {
-        console.log('******************** remember ==> ',req.body.remember);
         if (req.body.remember) {
             req.session.cookie.originalMaxAge = 168 * 60 * 60 * 1000; // 7 day 24
         } else {

@@ -17,7 +17,7 @@ class indexController {
         throw { Code: "406", Title: "خطا شناسایی کاربر", Message: "یه مشکلی پیش امده، فک می کنم غریبه ای" };
       }
     } catch (err) {
-      res.render("404", err);
+      next(err);
     }
   }
   async buyPanel(req, res, next) {
