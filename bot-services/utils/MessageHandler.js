@@ -41,24 +41,39 @@ module.exports.startMessage = (pelan = "Bronze") => {
 @IAUKhShBurse_bot`;
 };
 
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 module.exports.symbolDetail = (data) => {
   return `
     📊 سهام : ${data.symbol}
     🛒 مارکت : ${data.market}
+
     حجم معاملات : ${addUnit(data.volume)}
+    آخرین قیمت : ${numberWithCommas(data.price)}
 
-    خریدار حقیقی : ${data.buyerNumberPerson}%
-    فروشنده حقیقی : ${data.sellerNumberPerson}%
+    تغییر : ${Math.floor(data.change)}%  ${data.change > 0 ? "🟢" : "🔴"}
+    درصد تغییر : ${data.percent.substring(3, 6)}%  ${data.percent > 0 ? "🟢" : "🔴"}
 
-    ورود و خروج پول حقیقی : ${addUnit(data["enter_exit"])} تومان
-    حجم میانگین ماه : ${addUnit(data.monthVolumeAvg)} 
+    ارزش : ${addUnit(data.value)}
+    باز : ${numberWithCommas(data.openPrice)}
+    بیشترین : ${numberWithCommas(data.highPrice)}
+    کمترین : ${numberWithCommas(data.lowPrice)}
+   
+    تعداد تقاضا : ${numberWithCommas(data.askVolume)}
+    قیمت تقاضا : ${numberWithCommas(data.askPrice)}
+    
+    قیمت عرضه : ${numberWithCommas(data.bidPrice)}
+    تعداد عرضه : ${numberWithCommas(data.bidVolume)}
 
-    سرانه خرید : ${addUnit(data.buyS)}
-    سرانه فروش : ${addUnit(data.sellS)}
-    قدرت خریدار به فروشنده : ${data.power}
+    استراتژی : ${data.strategy}
 
-    درصد معاملات : ${data.percent}%  ${data.percent > 0 ? "🟢" : "🔴"}
-    درصد پایانی : ${data.finalPercent}%  ${data.finalPercent > 0 ? "🟢" : "🔴"}
+    حجم فروش حقیقی : ${addUnit(data.volumeSellerPerson)}
+    حجم خرید حقیقی : ${addUnit(data.volumeBuyerPerson)}
+    تعداد فروشنده حقیقی : ${data.sellerNumberPerson}
+    تعداد خریدار حقیقی : ${data.buyerNumberPerson}
+
 
     📅 ${time.format("D")} ${months[time.format("M") - 1]}
     ⏱ ${time.format("HH:mm")}
